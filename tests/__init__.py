@@ -1,4 +1,4 @@
-"""Asynchronous Python client for Withings."""
+"""Asynchronous Python client for AirGradient."""
 
 from pathlib import Path
 

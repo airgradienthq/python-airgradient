@@ -1,5 +1,3 @@
 """Asynchronous Python client for AirGradient."""
 
-
-__all__ = [
-]
+__all__ = []

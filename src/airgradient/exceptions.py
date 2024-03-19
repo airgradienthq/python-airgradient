@@ -7,4 +7,3 @@ class AirGradientError(Exception):
 
 class AirGradientConnectionError(AirGradientError):
     """AirGradient connection exception."""
-

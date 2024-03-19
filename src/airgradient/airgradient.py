@@ -5,19 +5,15 @@ from __future__ import annotations
 import asyncio
 from dataclasses import dataclass
 from importlib import metadata
-from typing import TYPE_CHECKING, Any, Awaitable, Callable, cast
+from typing import TYPE_CHECKING, Any
 
 from aiohttp import ClientSession
 from aiohttp.hdrs import METH_POST
 from yarl import URL
 
-from .exceptions import (
-    AirGradientConnectionError, AirGradientError
-)
+from .exceptions import AirGradientConnectionError, AirGradientError
 
 if TYPE_CHECKING:
-    from datetime import date, datetime
-
     from typing_extensions import Self
 
 
