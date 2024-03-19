@@ -1,0 +1,56 @@
+{
+    "status": 0,
+    "body": {
+        "activities": [
+            {
+                "steps": 1209,
+                "distance": 1028.559,
+                "elevation": 0,
+                "soft": 1864,
+                "moderate": 292,
+                "intense": 0,
+                "active": 292,
+                "calories": 85.497,
+                "totalcalories": 2303.788,
+                "hr_average": 80,
+                "hr_min": 70,
+                "hr_max": 80,
+                "hr_zone_0": 100,
+                "hr_zone_1": 200,
+                "hr_zone_2": 300,
+                "hr_zone_3": 400,
+                "deviceid": null,
+                "hash_deviceid": null,
+                "timezone": "Europe/Amsterdam",
+                "date": "2023-10-20",
+                "modified": 1697884856,
+                "brand": 18,
+                "modelid": 1055,
+                "model": "GoogleFit tracker",
+                "is_tracker": false
+            },
+            {
+                "steps": 1155,
+                "distance": 1020.121,
+                "elevation": 0,
+                "soft": 1516,
+                "moderate": 287,
+                "intense": 420,
+                "active": 707,
+                "calories": 134.132,
+                "totalcalories": 2357.149,
+                "deviceid": null,
+                "hash_deviceid": null,
+                "timezone": "Europe/Amsterdam",
+                "date": "2023-10-21",
+                "modified": 1697887349,
+                "brand": 18,
+                "modelid": 1055,
+                "model": "GoogleFit tracker",
+                "is_tracker": false
+            }
+        ],
+        "more": false,
+        "offset": 200
+    }
+}

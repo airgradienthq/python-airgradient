@@ -1,0 +1,11 @@
+{
+  "status": 0,
+  "body": {
+    "goals": {
+      "weight": {
+        "value": 70500,
+        "unit": -3
+      }
+    }
+  }
+}

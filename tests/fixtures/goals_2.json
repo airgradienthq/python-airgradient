@@ -1,0 +1,9 @@
+{
+  "status": 0,
+  "body": {
+    "goals": {
+      "steps": 10000,
+      "sleep": 28800
+    }
+  }
+}

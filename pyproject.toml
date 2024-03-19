@@ -1,0 +1,160 @@
+[tool.poetry]
+name = "airgradient"
+version = "0.1.0"
+description = "Asynchronous Python client for AirGradient."
+authors = ["Joost Lekkerkerker <joostlek@outlook.com>"]
+maintainers = ["Joost Lekkerkerker <joostlek@outlook.com>"]
+license = "MIT"
+readme = "README.md"
+homepage = "https://github.com/airgradienthq/python-airgradient"
+repository = "https://github.com/airgradienthq/python-airgradient"
+documentation = "https://github.com/airgradienthq/python-airgradient"
+keywords = ["Airgradient", "api", "async", "client"]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Framework :: AsyncIO",
+  "Intended Audience :: Developers",
+  "Natural Language :: English",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+]
+packages = [
+    { include = "airgradient", from = "src" },
+]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+aiohttp = ">=3.0.0"
+yarl = ">=1.6.0"
+
+[tool.poetry.group.dev.dependencies]
+codespell = "2.2.6"
+covdefaults = "2.3.0"
+coverage = {version = "7.4.4", extras = ["toml"]}
+mypy = "1.9.0"
+pre-commit = "3.6.2"
+pre-commit-hooks = "4.5.0"
+pylint = "3.1.0"
+pytest = "8.1.1"
+pytest-asyncio = "0.23.5.post1"
+pytest-cov = "4.1.0"
+ruff = "0.3.3"
+safety = "3.0.1"
+yamllint = "1.35.1"
+syrupy = "4.6.1"
+aioresponses = "0.7.6"
+
+[tool.poetry.urls]
+"Bug Tracker" = "https://github.com/airgradienthq/python-airgradient/issues"
+Changelog = "https://github.com/airgradienthq/python-airgradient/releases"
+
+[tool.coverage.report]
+show_missing = true
+
+[tool.coverage.run]
+plugins = ["covdefaults"]
+source = ["aiowithings"]
+
+[tool.mypy]
+# Specify the target platform details in config, so your developers are
+# free to run mypy on Windows, Linux, or macOS and get consistent
+# results.
+platform = "linux"
+python_version = "3.11"
+
+# show error messages from unrelated files
+follow_imports = "normal"
+
+# suppress errors about unsatisfied imports
+ignore_missing_imports = true
+
+# be strict
+check_untyped_defs = true
+disallow_any_generics = true
+disallow_incomplete_defs = true
+disallow_subclassing_any = true
+disallow_untyped_calls = true
+disallow_untyped_decorators = true
+disallow_untyped_defs = true
+no_implicit_optional = true
+strict_optional = true
+warn_incomplete_stub = true
+warn_no_return = true
+warn_redundant_casts = true
+warn_return_any = true
+warn_unused_configs = true
+warn_unused_ignores = true
+
+[tool.pylint.MASTER]
+ignore = [
+  "tests",
+]
+
+[tool.pylint.BASIC]
+good-names = [
+  "_",
+  "ex",
+  "fp",
+  "i",
+  "id",
+  "j",
+  "k",
+  "on",
+  "Run",
+  "T",
+]
+
+[tool.pylint.DESIGN]
+max-attributes = 8
+
+[tool.pylint."MESSAGES CONTROL"]
+disable = [
+  "duplicate-code",
+  "format",
+  "unsubscriptable-object",
+  "too-many-instance-attributes",
+  "wrong-import-order",
+]
+
+[tool.pylint.SIMILARITIES]
+ignore-imports = true
+
+[tool.pylint.FORMAT]
+max-line-length = 88
+
+[tool.pytest.ini_options]
+addopts = "--cov"
+asyncio_mode = "auto"
+
+[tool.ruff.lint]
+ignore = [
+  "ANN101", # Self... explanatory
+  "ANN102", # cls... just as useless
+  "ANN401", # Opinioated warning on disallowing dynamically typed expressions
+  "COM812", # Conflicts with other rules
+  "D203", # Conflicts with other rules
+  "D213", # Conflicts with other rules
+  "D417", # False positives in some occasions
+  "ISC001", # Conflicts with other rules
+  "PLR2004", # Just annoying, not really useful
+]
+select = ["ALL"]
+
+[tool.ruff.lint.flake8-pytest-style]
+fixture-parentheses = false
+mark-parentheses = false
+
+[tool.ruff.lint.isort]
+known-first-party = ["airgradient"]
+force-sort-within-sections = true
+split-on-trailing-comma = false
+combine-as-imports = true
+
+[tool.ruff.lint.mccabe]
+max-complexity = 25
+
+[build-system]
+build-backend = "poetry.core.masonry.api"
+requires = ["poetry-core>=1.0.0"]

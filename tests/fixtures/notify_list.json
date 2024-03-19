@@ -1,0 +1,13 @@
+{
+  "status": 0,
+  "body": {
+    "profiles": [
+      {
+        "appli": 1,
+        "callbackurl": "https://www.withings.com",
+        "expires": 2147483647,
+        "comment": "My notification subscription"
+      }
+    ]
+  }
+}
