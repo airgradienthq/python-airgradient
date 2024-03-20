@@ -18,7 +18,7 @@ def snapshot_assertion(snapshot: SnapshotAssertion) -> SnapshotAssertion:
     return snapshot.use_extension(AirGradientSnapshotExtension)
 
 
-@pytest.fixture(name="airgradient_client")
+@pytest.fixture
 async def client() -> AsyncGenerator[AirGradientClient, None]:
     """Return a AirGradient client."""
     async with aiohttp.ClientSession() as session, AirGradientClient(

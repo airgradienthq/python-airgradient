@@ -2,12 +2,19 @@
 
 from __future__ import annotations
 
-import aiohttp
-from aioresponses import aioresponses
+import asyncio
+from typing import TYPE_CHECKING, Any
 
-from airgradient import AirGradientClient
+import aiohttp
+from aioresponses import CallbackResult, aioresponses
+import pytest
+
+from airgradient import AirGradientClient, AirGradientConnectionError, AirGradientError
 from tests import load_fixture
 from tests.const import MOCK_HOST, MOCK_URL
+
+if TYPE_CHECKING:
+    from syrupy import SnapshotAssertion
 
 
 async def test_putting_in_own_session(
@@ -26,3 +33,69 @@ async def test_putting_in_own_session(
         assert not airgradient.session.closed
         await airgradient.close()
         assert not airgradient.session.closed
+
+
+async def test_creating_own_session(
+    responses: aioresponses,
+) -> None:
+    """Test creating own session."""
+    responses.get(
+        f"{MOCK_URL}/status",
+        status=200,
+        body=load_fixture("status.json"),
+    )
+    airgradient = AirGradientClient(host=MOCK_HOST)
+    await airgradient.get_status()
+    assert airgradient.session is not None
+    assert not airgradient.session.closed
+    await airgradient.close()
+    assert airgradient.session.closed
+
+
+async def test_unexpected_server_response(
+    responses: aioresponses,
+    client: AirGradientClient,
+) -> None:
+    """Test handling unexpected response."""
+    responses.get(
+        f"{MOCK_URL}/status",
+        status=200,
+        headers={"Content-Type": "plain/text"},
+        body="Yes",
+    )
+    with pytest.raises(AirGradientError):
+        assert await client.get_status()
+
+
+async def test_timeout(
+    responses: aioresponses,
+) -> None:
+    """Test request timeout."""
+
+    # Faking a timeout by sleeping
+    async def response_handler(_: str, **_kwargs: Any) -> CallbackResult:
+        """Response handler for this test."""
+        await asyncio.sleep(2)
+        return CallbackResult(body="Goodmorning!")
+
+    responses.get(
+        f"{MOCK_URL}/status",
+        callback=response_handler,
+    )
+    async with AirGradientClient(host=MOCK_HOST, request_timeout=1) as airgradient:
+        with pytest.raises(AirGradientConnectionError):
+            assert await airgradient.get_status()
+
+
+async def test_status(
+    responses: aioresponses,
+    client: AirGradientClient,
+    snapshot: SnapshotAssertion,
+) -> None:
+    """Test status call."""
+    responses.get(
+        f"{MOCK_URL}/status",
+        status=200,
+        body=load_fixture("status.json"),
+    )
+    assert await client.get_status() == snapshot
