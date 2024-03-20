@@ -19,10 +19,14 @@ class Status(DataClassORJSONMixin):
     pm02: int
     pm10: int
     pm003_count: int
-    tvoc_index: int
-    tvoc_raw: int
-    nox_index: int
-    nox_raw: int
+    total_volatile_organic_component_index: int = field(
+        metadata=field_options(alias="tvoc_index")
+    )
+    raw_total_volatile_organic_component: int = field(
+        metadata=field_options(alias="tvoc_raw")
+    )
+    nitrogen_index: int = field(metadata=field_options(alias="nox_index"))
+    raw_nitrogen: int = field(metadata=field_options(alias="nox_raw"))
     ambient_temperature: float = field(metadata=field_options(alias="atmp"))
     relative_humidity: float = field(metadata=field_options(alias="rhum"))
     boot_time: int = field(metadata=field_options(alias="boot"))
