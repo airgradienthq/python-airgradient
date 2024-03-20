@@ -28,6 +28,8 @@ packages = [
 python = "^3.11"
 aiohttp = ">=3.0.0"
 yarl = ">=1.6.0"
+mashumaro = "^3.11"
+orjson = ">=3.9.0"
 
 [tool.poetry.group.dev.dependencies]
 codespell = "2.2.6"
@@ -55,7 +57,7 @@ show_missing = true
 
 [tool.coverage.run]
 plugins = ["covdefaults"]
-source = ["aiowithings"]
+source = ["airgradient"]
 
 [tool.mypy]
 # Specify the target platform details in config, so your developers are

@@ -8,10 +8,11 @@ from importlib import metadata
 from typing import TYPE_CHECKING, Any
 
 from aiohttp import ClientSession
-from aiohttp.hdrs import METH_POST
+from aiohttp.hdrs import METH_GET
 from yarl import URL
 
 from .exceptions import AirGradientConnectionError, AirGradientError
+from .models import Status
 
 if TYPE_CHECKING:
     from typing_extensions import Self
@@ -36,11 +37,7 @@ class AirGradientClient:
         data: dict[str, Any] | None = None,
     ) -> str:
         """Handle a request to AirGradient."""
-        url = URL.build(
-            scheme="https",
-            host=self.host,
-            port=443,
-        ).joinpath(uri)
+        url = URL.build(scheme="http", host=self.host).joinpath(uri)
 
         headers = {
             "User-Agent": f"PythonAirGradient/{VERSION}",
@@ -54,7 +51,7 @@ class AirGradientClient:
         try:
             async with asyncio.timeout(self.request_timeout):
                 response = await self.session.request(
-                    METH_POST,
+                    METH_GET,
                     url,
                     headers=headers,
                     data=data,
@@ -74,6 +71,11 @@ class AirGradientClient:
             )
 
         return await response.text()
+
+    async def get_status(self) -> Status:
+        """Get status from AirGradient."""
+        response = await self._request("status")
+        return Status.from_json(response)
 
     async def close(self) -> None:
         """Close open client session."""

@@ -1,0 +1,16 @@
+{
+    "wifi": -38,
+    "serialno": "84fce612f0b8",
+    "rco2": 416,
+    "pm01": 22,
+    "pm02": 34,
+    "pm10": 41,
+    "pm003_count": 1397,
+    "tvoc_index": 100,
+    "tvoc_raw": 32451,
+    "nox_index": 1,
+    "nox_raw": 15345,
+    "atmp": 27.96,
+    "rhum": 48,
+    "boot": 28
+}
