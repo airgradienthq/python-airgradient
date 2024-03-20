@@ -1,0 +1,19 @@
+# serializer version: 1
+# name: test_status
+  dict({
+    'ambient_temperature': 27.96,
+    'boot_time': 28,
+    'nox_index': 1,
+    'nox_raw': 15345,
+    'pm003_count': 1397,
+    'pm01': 22,
+    'pm02': 34,
+    'pm10': 41,
+    'rco2': 416,
+    'relative_humidity': 48.0,
+    'serial_number': '84fce612f0b8',
+    'signal_strength': -38,
+    'tvoc_index': 100,
+    'tvoc_raw': 32451,
+  })
+# ---
