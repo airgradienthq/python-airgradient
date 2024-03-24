@@ -109,7 +109,6 @@ SOFTWARE.
 
 [build-shield]: https://github.com/airgradienthq/python-airgradient/actions/workflows/tests.yaml/badge.svg
 [build]: https://github.com/airgradienthq/python-airgradient/actions
-[code-smells]: https://sonarcloud.io/api/project_badges/measure?project=joostlek_python-withings&metric=code_smells
 [codecov-shield]: https://codecov.io/gh/airgradienthq/python-airgradient/branch/master/graph/badge.svg
 [codecov]: https://codecov.io/gh/airgradienthq/python-airgradient
 [commits-shield]: https://img.shields.io/github/commit-activity/y/airgradienthq/python-airgradient.svg
@@ -123,8 +122,8 @@ SOFTWARE.
 [poetry]: https://python-poetry.org
 [pre-commit]: https://pre-commit.com/
 [project-stage-shield]: https://img.shields.io/badge/project%20stage-stable-green.svg
-[python-versions-shield]: https://img.shields.io/pypi/pyversions/airgradienthq
+[python-versions-shield]: https://img.shields.io/pypi/pyversions/airgradient
 [releases-shield]: https://img.shields.io/github/release/airgradienthq/python-airgradient.svg
 [releases]: https://github.com/airgradienthq/python-airgradient/releases
 [semver]: http://semver.org/spec/v2.0.0.html
-[pypi]: https://pypi.org/project/airgradienthq/
+[pypi]: https://pypi.org/project/airgradient/
