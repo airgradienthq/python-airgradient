@@ -22,7 +22,7 @@ async def test_putting_in_own_session(
 ) -> None:
     """Test putting in own session."""
     responses.get(
-        f"{MOCK_URL}/status",
+        f"{MOCK_URL}/measures/current",
         status=200,
         body=load_fixture("status.json"),
     )
@@ -40,7 +40,7 @@ async def test_creating_own_session(
 ) -> None:
     """Test creating own session."""
     responses.get(
-        f"{MOCK_URL}/status",
+        f"{MOCK_URL}/measures/current",
         status=200,
         body=load_fixture("status.json"),
     )
@@ -58,7 +58,7 @@ async def test_unexpected_server_response(
 ) -> None:
     """Test handling unexpected response."""
     responses.get(
-        f"{MOCK_URL}/status",
+        f"{MOCK_URL}/measures/current",
         status=200,
         headers={"Content-Type": "plain/text"},
         body="Yes",
@@ -79,7 +79,7 @@ async def test_timeout(
         return CallbackResult(body="Goodmorning!")
 
     responses.get(
-        f"{MOCK_URL}/status",
+        f"{MOCK_URL}/measures/current",
         callback=response_handler,
     )
     async with AirGradientClient(host=MOCK_HOST, request_timeout=1) as airgradient:
@@ -94,7 +94,7 @@ async def test_status(
 ) -> None:
     """Test status call."""
     responses.get(
-        f"{MOCK_URL}/status",
+        f"{MOCK_URL}/measures/current",
         status=200,
         body=load_fixture("status.json"),
     )
