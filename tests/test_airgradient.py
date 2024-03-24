@@ -24,11 +24,11 @@ async def test_putting_in_own_session(
     responses.get(
         f"{MOCK_URL}/measures/current",
         status=200,
-        body=load_fixture("status.json"),
+        body=load_fixture("current_measures.json"),
     )
     async with aiohttp.ClientSession() as session:
         airgradient = AirGradientClient(session=session, host=MOCK_HOST)
-        await airgradient.get_status()
+        await airgradient.get_current_measures()
         assert airgradient.session is not None
         assert not airgradient.session.closed
         await airgradient.close()
@@ -42,10 +42,10 @@ async def test_creating_own_session(
     responses.get(
         f"{MOCK_URL}/measures/current",
         status=200,
-        body=load_fixture("status.json"),
+        body=load_fixture("current_measures.json"),
     )
     airgradient = AirGradientClient(host=MOCK_HOST)
-    await airgradient.get_status()
+    await airgradient.get_current_measures()
     assert airgradient.session is not None
     assert not airgradient.session.closed
     await airgradient.close()
@@ -64,7 +64,7 @@ async def test_unexpected_server_response(
         body="Yes",
     )
     with pytest.raises(AirGradientError):
-        assert await client.get_status()
+        assert await client.get_current_measures()
 
 
 async def test_timeout(
@@ -84,7 +84,7 @@ async def test_timeout(
     )
     async with AirGradientClient(host=MOCK_HOST, request_timeout=1) as airgradient:
         with pytest.raises(AirGradientConnectionError):
-            assert await airgradient.get_status()
+            assert await airgradient.get_current_measures()
 
 
 async def test_status(
@@ -96,6 +96,6 @@ async def test_status(
     responses.get(
         f"{MOCK_URL}/measures/current",
         status=200,
-        body=load_fixture("status.json"),
+        body=load_fixture("current_measures.json"),
     )
-    assert await client.get_status() == snapshot
+    assert await client.get_current_measures() == snapshot
