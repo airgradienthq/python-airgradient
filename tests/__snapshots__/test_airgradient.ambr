@@ -1,5 +1,5 @@
 # serializer version: 1
-# name: test_status
+# name: test_current_fixtures[current_measures.json]
   dict({
     'ambient_temperature': 27.96,
     'boot_time': 28,
@@ -16,5 +16,24 @@
     'serial_number': '84fce612f5b8',
     'signal_strength': -52,
     'total_volatile_organic_component_index': 99,
+  })
+# ---
+# name: test_current_fixtures[measures_after_boot.json]
+  dict({
+    'ambient_temperature': None,
+    'boot_time': 0,
+    'firmware_version': '3.0.8',
+    'nitrogen_index': None,
+    'pm003_count': None,
+    'pm01': None,
+    'pm02': None,
+    'pm10': None,
+    'raw_nitrogen': None,
+    'raw_total_volatile_organic_component': None,
+    'rco2': None,
+    'relative_humidity': None,
+    'serial_number': '84fce612f5b8',
+    'signal_strength': -59,
+    'total_volatile_organic_component_index': None,
   })
 # ---
