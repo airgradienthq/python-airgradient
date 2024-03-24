@@ -87,15 +87,20 @@ async def test_timeout(
             assert await airgradient.get_current_measures()
 
 
-async def test_status(
+@pytest.mark.parametrize(
+    "fixture",
+    ["current_measures.json", "measures_after_boot.json"],
+)
+async def test_current_fixtures(
     responses: aioresponses,
     client: AirGradientClient,
     snapshot: SnapshotAssertion,
+    fixture: str,
 ) -> None:
     """Test status call."""
     responses.get(
         f"{MOCK_URL}/measures/current",
         status=200,
-        body=load_fixture("current_measures.json"),
+        body=load_fixture(fixture),
     )
     assert await client.get_current_measures() == snapshot
