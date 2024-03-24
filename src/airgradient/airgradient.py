@@ -74,7 +74,7 @@ class AirGradientClient:
 
     async def get_status(self) -> Status:
         """Get status from AirGradient."""
-        response = await self._request("status")
+        response = await self._request("measures/current")
         return Status.from_json(response)
 
     async def close(self) -> None:
