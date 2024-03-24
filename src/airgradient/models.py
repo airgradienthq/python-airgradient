@@ -9,8 +9,8 @@ from mashumaro.mixins.orjson import DataClassORJSONMixin
 
 
 @dataclass
-class Status(DataClassORJSONMixin):
-    """Status model."""
+class Measures(DataClassORJSONMixin):
+    """Measures model."""
 
     signal_strength: int = field(metadata=field_options(alias="wifi"))
     serial_number: str = field(metadata=field_options(alias="serialno"))
