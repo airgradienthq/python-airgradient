@@ -2,14 +2,13 @@
 
 from __future__ import annotations
 
-import asyncio
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING
 
 import aiohttp
-from aioresponses import CallbackResult, aioresponses
+from aioresponses import aioresponses
 import pytest
 
-from airgradient import AirGradientClient, AirGradientConnectionError, AirGradientError
+from airgradient import AirGradientClient, AirGradientError
 from tests import load_fixture
 from tests.const import MOCK_HOST, MOCK_URL
 
@@ -59,32 +58,12 @@ async def test_unexpected_server_response(
     """Test handling unexpected response."""
     responses.get(
         f"{MOCK_URL}/measures/current",
-        status=200,
+        status=404,
         headers={"Content-Type": "plain/text"},
         body="Yes",
     )
     with pytest.raises(AirGradientError):
         assert await client.get_current_measures()
-
-
-async def test_timeout(
-    responses: aioresponses,
-) -> None:
-    """Test request timeout."""
-
-    # Faking a timeout by sleeping
-    async def response_handler(_: str, **_kwargs: Any) -> CallbackResult:
-        """Response handler for this test."""
-        await asyncio.sleep(2)
-        return CallbackResult(body="Goodmorning!")
-
-    responses.get(
-        f"{MOCK_URL}/measures/current",
-        callback=response_handler,
-    )
-    async with AirGradientClient(host=MOCK_HOST, request_timeout=1) as airgradient:
-        with pytest.raises(AirGradientConnectionError):
-            assert await airgradient.get_current_measures()
 
 
 @pytest.mark.parametrize(

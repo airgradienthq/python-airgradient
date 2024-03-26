@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import asyncio
 from dataclasses import dataclass
 from importlib import metadata
 from typing import TYPE_CHECKING, Any
@@ -11,7 +10,7 @@ from aiohttp import ClientSession
 from aiohttp.hdrs import METH_GET
 from yarl import URL
 
-from .exceptions import AirGradientConnectionError, AirGradientError
+from .exceptions import AirGradientConnectionError
 from .models import Measures
 
 if TYPE_CHECKING:
@@ -48,24 +47,19 @@ class AirGradientClient:
             self.session = ClientSession()
             self._close_session = True
 
-        try:
-            async with asyncio.timeout(self.request_timeout):
-                response = await self.session.request(
-                    METH_GET,
-                    url,
-                    headers=headers,
-                    data=data,
-                )
-        except asyncio.TimeoutError as exception:
-            msg = "Timeout occurred while connecting to AirGradient"
-            raise AirGradientConnectionError(msg) from exception
+        response = await self.session.request(
+            METH_GET,
+            url,
+            headers=headers,
+            data=data,
+        )
 
         content_type = response.headers.get("Content-Type", "")
 
-        if "application/json" not in content_type:
+        if response.status != 200:
             text = await response.text()
             msg = "Unexpected response from AirGradient"
-            raise AirGradientError(
+            raise AirGradientConnectionError(
                 msg,
                 {"Content-Type": content_type, "response": text},
             )
