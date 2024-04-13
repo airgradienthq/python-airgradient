@@ -55,8 +55,8 @@ class PmStandard(StrEnum):
 class TemperatureUnit(StrEnum):
     """Temperature unit model."""
 
-    C = "c"
-    F = "f"
+    CELSIUS = "c"
+    FAHRENHEIT = "f"
 
 
 class ConfigurationControl(StrEnum):
