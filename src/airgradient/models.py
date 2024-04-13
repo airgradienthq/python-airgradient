@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass, field
+from enum import StrEnum
 
 from mashumaro import field_options
 from mashumaro.mixins.orjson import DataClassORJSONMixin
@@ -41,4 +42,46 @@ class Measures(DataClassORJSONMixin):
     )
     relative_humidity: float | None = field(
         default=None, metadata=field_options(alias="rhum")
+    )
+
+
+class PmStandard(StrEnum):
+    """PM standard model."""
+
+    UGM3 = "ugm3"
+    USAQI = "usaqi"
+
+
+class TemperatureUnit(StrEnum):
+    """Temperature unit model."""
+
+    C = "c"
+    F = "f"
+
+
+class ConfigurationControl(StrEnum):
+    """Configuration control model."""
+
+    CLOUD = "cloud"
+    LOCAL = "local"
+    BOTH = "both"
+
+
+@dataclass
+class Config(DataClassORJSONMixin):
+    """Config model."""
+
+    country: str
+    pm_standard: PmStandard = field(metadata=field_options(alias="pmStandard"))
+    co2_automatic_baseline_calibration_days: int = field(
+        metadata=field_options(alias="abcDays")
+    )
+    temperature_unit: TemperatureUnit = field(
+        metadata=field_options(alias="temperatureUnit")
+    )
+    configuration_control: ConfigurationControl = field(
+        metadata=field_options(alias="configurationControl")
+    )
+    post_data_to_airgradient: bool = field(
+        metadata=field_options(alias="postDataToAirGradient")
     )

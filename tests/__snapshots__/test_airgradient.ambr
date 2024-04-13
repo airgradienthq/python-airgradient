@@ -1,4 +1,14 @@
 # serializer version: 1
+# name: test_config
+  dict({
+    'co2_automatic_baseline_calibration_days': 8,
+    'configuration_control': <ConfigurationControl.BOTH: 'both'>,
+    'country': 'DE',
+    'pm_standard': <PmStandard.UGM3: 'ugm3'>,
+    'post_data_to_airgradient': True,
+    'temperature_unit': <TemperatureUnit.C: 'c'>,
+  })
+# ---
 # name: test_current_fixtures[current_measures.json]
   dict({
     'ambient_temperature': 27.96,

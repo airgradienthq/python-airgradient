@@ -83,3 +83,17 @@ async def test_current_fixtures(
         body=load_fixture(fixture),
     )
     assert await client.get_current_measures() == snapshot
+
+
+async def test_config(
+    responses: aioresponses,
+    client: AirGradientClient,
+    snapshot: SnapshotAssertion,
+) -> None:
+    """Test config call."""
+    responses.get(
+        f"{MOCK_URL}/config",
+        status=200,
+        body=load_fixture("config.json"),
+    )
+    assert await client.get_config() == snapshot

@@ -11,7 +11,7 @@ from aiohttp.hdrs import METH_GET
 from yarl import URL
 
 from .exceptions import AirGradientConnectionError
-from .models import Measures
+from .models import Config, Measures
 
 if TYPE_CHECKING:
     from typing_extensions import Self
@@ -70,6 +70,11 @@ class AirGradientClient:
         """Get current measures from AirGradient."""
         response = await self._request("measures/current")
         return Measures.from_json(response)
+
+    async def get_config(self) -> Config:
+        """Get config from AirGradient device."""
+        response = await self._request("config")
+        return Config.from_json(response)
 
     async def close(self) -> None:
         """Close open client session."""
