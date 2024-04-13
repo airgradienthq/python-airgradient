@@ -7,11 +7,18 @@ from importlib import metadata
 from typing import TYPE_CHECKING, Any
 
 from aiohttp import ClientSession
-from aiohttp.hdrs import METH_GET
+from aiohttp.hdrs import METH_GET, METH_PUT
 from yarl import URL
 
 from .exceptions import AirGradientConnectionError
-from .models import Config, Measures
+from .models import (
+    Config,
+    ConfigurationControl,
+    LedBarMode,
+    Measures,
+    PmStandard,
+    TemperatureUnit,
+)
 
 if TYPE_CHECKING:
     from typing_extensions import Self
@@ -33,6 +40,7 @@ class AirGradientClient:
         self,
         uri: str,
         *,
+        method: str = METH_GET,
         data: dict[str, Any] | None = None,
     ) -> str:
         """Handle a request to AirGradient."""
@@ -48,15 +56,14 @@ class AirGradientClient:
             self._close_session = True
 
         response = await self.session.request(
-            METH_GET,
+            method,
             url,
             headers=headers,
             data=data,
         )
 
-        content_type = response.headers.get("Content-Type", "")
-
         if response.status != 200:
+            content_type = response.headers.get("Content-Type", "")
             text = await response.text()
             msg = "Unexpected response from AirGradient"
             raise AirGradientConnectionError(
@@ -75,6 +82,28 @@ class AirGradientClient:
         """Get config from AirGradient device."""
         response = await self._request("config")
         return Config.from_json(response)
+
+    async def _set_config(self, field: str, value: Any) -> None:
+        """Set config on AirGradient device."""
+        await self._request("config", method=METH_PUT, data={field: value})
+
+    async def set_pm_standard(self, pm_standard: PmStandard) -> None:
+        """Set PM standard on AirGradient device."""
+        await self._set_config("pmStandard", pm_standard)
+
+    async def set_temperature_unit(self, temperature_unit: TemperatureUnit) -> None:
+        """Set temperature unit on AirGradient device."""
+        await self._set_config("temperatureUnit", temperature_unit)
+
+    async def set_configuration_control(
+        self, configuration_control: ConfigurationControl
+    ) -> None:
+        """Set configuration control on AirGradient device."""
+        await self._set_config("configurationControl", configuration_control)
+
+    async def set_led_bar_mode(self, led_bar_mode: LedBarMode) -> None:
+        """Set LED bar mode on AirGradient device."""
+        await self._set_config("ledBarMode", led_bar_mode)
 
     async def close(self) -> None:
         """Close open client session."""

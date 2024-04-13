@@ -67,12 +67,21 @@ class ConfigurationControl(StrEnum):
     BOTH = "both"
 
 
+class LedBarMode(StrEnum):
+    """LED bar mode."""
+
+    OFF = "off"
+    CO2 = "co2"
+    PM = "pm"
+
+
 @dataclass
 class Config(DataClassORJSONMixin):
     """Config model."""
 
     country: str
     pm_standard: PmStandard = field(metadata=field_options(alias="pmStandard"))
+    led_bar_mode: LedBarMode = field(metadata=field_options(alias="ledBarMode"))
     co2_automatic_baseline_calibration_days: int = field(
         metadata=field_options(alias="abcDays")
     )
