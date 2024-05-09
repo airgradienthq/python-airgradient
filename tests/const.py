@@ -9,5 +9,5 @@ version = metadata.version("airgradient")
 
 HEADERS = {
     "User-Agent": f"PythonAirGradient/{version}",
-    "Accept": "application/json, text/plain, */*",
+    "Accept": "application/json",
 }

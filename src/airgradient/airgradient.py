@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+from asyncio import timeout
 from dataclasses import dataclass
 from importlib import metadata
 from typing import TYPE_CHECKING, Any
@@ -48,19 +49,20 @@ class AirGradientClient:
 
         headers = {
             "User-Agent": f"PythonAirGradient/{VERSION}",
-            "Accept": "application/json, text/plain, */*",
+            "Accept": "application/json",
         }
 
         if self.session is None:
             self.session = ClientSession()
             self._close_session = True
 
-        response = await self.session.request(
-            method,
-            url,
-            headers=headers,
-            data=data,
-        )
+        async with timeout(self.request_timeout):
+            response = await self.session.request(
+                method,
+                url,
+                headers=headers,
+                data=data,
+            )
 
         if response.status != 200:
             content_type = response.headers.get("Content-Type", "")
