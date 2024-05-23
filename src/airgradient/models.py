@@ -15,9 +15,9 @@ class Measures(DataClassORJSONMixin):
 
     signal_strength: int = field(metadata=field_options(alias="wifi"))
     serial_number: str = field(metadata=field_options(alias="serialno"))
-    boot_time: int = field(metadata=field_options(alias="boot"))
-    firmware_version: str = field(metadata=field_options(alias="firmwareVersion"))
-    model: str = field(metadata=field_options(alias="fwMode"))
+    boot_time: int = field(metadata=field_options(alias="bootCount"))
+    firmware_version: str = field(metadata=field_options(alias="firmware"))
+    model: str = field(metadata=field_options(alias="model"))
     rco2: int | None = None
     pm01: int | None = None
     pm02: int | None = None
