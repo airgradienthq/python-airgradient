@@ -146,5 +146,5 @@ async def test_setting_config(
         f"{MOCK_URL}/config",
         METH_PUT,
         headers=HEADERS,
-        data=expected_data,
+        json=expected_data,
     )
