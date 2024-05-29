@@ -61,7 +61,7 @@ class AirGradientClient:
                 method,
                 url,
                 headers=headers,
-                data=data,
+                json=data,
             )
 
         if response.status != 200:
