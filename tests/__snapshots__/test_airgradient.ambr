@@ -2,7 +2,7 @@
 # name: test_config
   dict({
     'co2_automatic_baseline_calibration_days': 8,
-    'configuration_control': <ConfigurationControl.BOTH: 'both'>,
+    'configuration_control': <ConfigurationControl.NOT_INITIALIZED: 'both'>,
     'country': 'DE',
     'led_bar_mode': <LedBarMode.CO2: 'co2'>,
     'pm_standard': <PmStandard.UGM3: 'ugm3'>,

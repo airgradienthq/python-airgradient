@@ -49,7 +49,7 @@ class PmStandard(StrEnum):
     """PM standard model."""
 
     UGM3 = "ugm3"
-    USAQI = "usaqi"
+    USAQI = "us-aqi"
 
 
 class TemperatureUnit(StrEnum):
@@ -64,7 +64,7 @@ class ConfigurationControl(StrEnum):
 
     CLOUD = "cloud"
     LOCAL = "local"
-    BOTH = "both"
+    NOT_INITIALIZED = "both"
 
 
 class LedBarMode(StrEnum):
