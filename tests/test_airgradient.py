@@ -134,6 +134,30 @@ async def test_config(
             lambda client: client.request_led_bar_test(),
             {"ledBarTestRequested": True},
         ),
+        (
+            lambda client: client.set_display_brightness(50),
+            {"displayBrightness": 50},
+        ),
+        (
+            lambda client: client.set_led_bar_brightness(50),
+            {"ledBarBrightness": 50},
+        ),
+        (
+            lambda client: client.enable_sharing_data(enable=True),
+            {"postDataToAirGradient": True},
+        ),
+        (
+            lambda client: client.set_co2_automatic_baseline_calibration(50),
+            {"abcDays": 50},
+        ),
+        (
+            lambda client: client.set_nox_learning_offset(50),
+            {"noxLearningOffset": 50},
+        ),
+        (
+            lambda client: client.set_tvoc_learning_offset(50),
+            {"tvocLearningOffset": 50},
+        ),
     ],
 )
 async def test_setting_config(
