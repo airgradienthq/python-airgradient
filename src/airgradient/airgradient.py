@@ -115,6 +115,30 @@ class AirGradientClient:
         """Request LED bar test on AirGradient device."""
         await self._set_config("ledBarTestRequested", value=True)
 
+    async def set_display_brightness(self, brightness: int) -> None:
+        """Set display brightness on AirGradient device."""
+        await self._set_config("displayBrightness", brightness)
+
+    async def set_led_bar_brightness(self, brightness: int) -> None:
+        """Set LED bar brightness on AirGradient device."""
+        await self._set_config("ledBarBrightness", brightness)
+
+    async def enable_sharing_data(self, *, enable: bool) -> None:
+        """Enable or disable sharing data on AirGradient device."""
+        await self._set_config("postDataToAirGradient", value=enable)
+
+    async def set_co2_automatic_baseline_calibration(self, days: int) -> None:
+        """Set CO2 automatic baseline calibration on AirGradient device."""
+        await self._set_config("abcDays", days)
+
+    async def set_nox_learning_offset(self, offset: int) -> None:
+        """Set NOx learning offset on AirGradient device."""
+        await self._set_config("noxLearningOffset", offset)
+
+    async def set_tvoc_learning_offset(self, offset: int) -> None:
+        """Set TVOC learning offset on AirGradient device."""
+        await self._set_config("tvocLearningOffset", offset)
+
     async def close(self) -> None:
         """Close open client session."""
         if self.session and self._close_session:
