@@ -126,6 +126,14 @@ async def test_config(
             lambda client: client.set_led_bar_mode(LedBarMode.CO2),
             {"ledBarMode": "co2"},
         ),
+        (
+            lambda client: client.request_co2_calibration(),
+            {"co2CalibrationRequested": True},
+        ),
+        (
+            lambda client: client.request_led_bar_test(),
+            {"ledBarTestRequested": True},
+        ),
     ],
 )
 async def test_setting_config(

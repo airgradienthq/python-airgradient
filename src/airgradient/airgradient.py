@@ -107,6 +107,14 @@ class AirGradientClient:
         """Set LED bar mode on AirGradient device."""
         await self._set_config("ledBarMode", led_bar_mode)
 
+    async def request_co2_calibration(self) -> None:
+        """Request CO2 calibration on AirGradient device."""
+        await self._set_config("co2CalibrationRequested", value=True)
+
+    async def request_led_bar_test(self) -> None:
+        """Request LED bar test on AirGradient device."""
+        await self._set_config("ledBarTestRequested", value=True)
+
     async def close(self) -> None:
         """Close open client session."""
         if self.session and self._close_session:
