@@ -94,3 +94,9 @@ class Config(DataClassORJSONMixin):
     post_data_to_airgradient: bool = field(
         metadata=field_options(alias="postDataToAirGradient")
     )
+    led_bar_brightness: int = field(metadata=field_options(alias="ledBarBrightness"))
+    display_brightness: int = field(metadata=field_options(alias="displayBrightness"))
+    nox_learning_offset: int = field(metadata=field_options(alias="noxLearningOffset"))
+    tvoc_learning_offset: int = field(
+        metadata=field_options(alias="tvocLearningOffset")
+    )
