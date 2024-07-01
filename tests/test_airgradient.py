@@ -88,7 +88,7 @@ async def test_timeout(
         await asyncio.sleep(2)
         return CallbackResult(body="Goodmorning!")
 
-    responses.post(
+    responses.get(
         f"{MOCK_URL}/measures/current",
         callback=response_handler,
     )
