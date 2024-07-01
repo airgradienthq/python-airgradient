@@ -2,15 +2,18 @@
 
 from __future__ import annotations
 
+import asyncio
 from typing import TYPE_CHECKING, Any, Awaitable, Callable
 
 import aiohttp
+from aiohttp import ClientError
 from aiohttp.hdrs import METH_PUT
-from aioresponses import aioresponses
+from aioresponses import CallbackResult, aioresponses
 import pytest
 
 from airgradient import (
     AirGradientClient,
+    AirGradientConnectionError,
     AirGradientError,
     ConfigurationControl,
     LedBarMode,
@@ -71,6 +74,44 @@ async def test_unexpected_server_response(
         body="Yes",
     )
     with pytest.raises(AirGradientError):
+        assert await client.get_current_measures()
+
+
+async def test_timeout(
+    responses: aioresponses,
+) -> None:
+    """Test request timeout."""
+
+    # Faking a timeout by sleeping
+    async def response_handler(_: str, **_kwargs: Any) -> CallbackResult:
+        """Response handler for this test."""
+        await asyncio.sleep(2)
+        return CallbackResult(body="Goodmorning!")
+
+    responses.post(
+        f"{MOCK_URL}/measures/current",
+        callback=response_handler,
+    )
+    async with AirGradientClient(request_timeout=1, host=MOCK_HOST) as airgradient:
+        with pytest.raises(AirGradientConnectionError):
+            assert await airgradient.get_current_measures()
+
+
+async def test_client_error(
+    client: AirGradientClient,
+    responses: aioresponses,
+) -> None:
+    """Test client error."""
+
+    async def response_handler(_: str, **_kwargs: Any) -> CallbackResult:
+        """Response handler for this test."""
+        raise ClientError
+
+    responses.post(
+        f"{MOCK_URL}/measures/current",
+        callback=response_handler,
+    )
+    with pytest.raises(AirGradientConnectionError):
         assert await client.get_current_measures()
 
 
