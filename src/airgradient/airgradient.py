@@ -2,12 +2,13 @@
 
 from __future__ import annotations
 
-from asyncio import timeout
+import asyncio
 from dataclasses import dataclass
 from importlib import metadata
+import socket
 from typing import TYPE_CHECKING, Any
 
-from aiohttp import ClientSession
+from aiohttp import ClientError, ClientResponseError, ClientSession
 from aiohttp.hdrs import METH_GET, METH_PUT
 from yarl import URL
 
@@ -56,13 +57,24 @@ class AirGradientClient:
             self.session = ClientSession()
             self._close_session = True
 
-        async with timeout(self.request_timeout):
-            response = await self.session.request(
-                method,
-                url,
-                headers=headers,
-                json=data,
-            )
+        try:
+            async with asyncio.timeout(self.request_timeout):
+                response = await self.session.request(
+                    method,
+                    url,
+                    headers=headers,
+                    json=data,
+                )
+        except asyncio.TimeoutError as exception:
+            msg = "Timeout occurred while connecting to the device"
+            raise AirGradientConnectionError(msg) from exception
+        except (
+            ClientError,
+            ClientResponseError,
+            socket.gaierror,
+        ) as exception:
+            msg = "Error occurred while communicating with the device"
+            raise AirGradientConnectionError(msg) from exception
 
         if response.status != 200:
             content_type = response.headers.get("Content-Type", "")
