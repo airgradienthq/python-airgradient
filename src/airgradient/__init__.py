@@ -10,6 +10,7 @@ from airgradient.models import (
     PmStandard,
     TemperatureUnit,
 )
+from airgradient.util import get_model_name
 
 __all__ = [
     "AirGradientClient",
@@ -21,4 +22,5 @@ __all__ = [
     "TemperatureUnit",
     "ConfigurationControl",
     "LedBarMode",
+    "get_model_name",
 ]
