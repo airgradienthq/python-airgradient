@@ -10,9 +10,10 @@ from typing import TYPE_CHECKING, Any
 
 from aiohttp import ClientError, ClientResponseError, ClientSession
 from aiohttp.hdrs import METH_GET, METH_PUT
+from mashumaro import MissingField
 from yarl import URL
 
-from .exceptions import AirGradientConnectionError
+from .exceptions import AirGradientConnectionError, AirGradientParseError
 from .models import (
     Config,
     ConfigurationControl,
@@ -90,12 +91,18 @@ class AirGradientClient:
     async def get_current_measures(self) -> Measures:
         """Get current measures from AirGradient."""
         response = await self._request("measures/current")
-        return Measures.from_json(response)
+        try:
+            return Measures.from_json(response)
+        except MissingField as err:
+            raise AirGradientParseError from err
 
     async def get_config(self) -> Config:
         """Get config from AirGradient device."""
         response = await self._request("config")
-        return Config.from_json(response)
+        try:
+            return Config.from_json(response)
+        except MissingField as err:
+            raise AirGradientParseError from err
 
     async def _set_config(self, field: str, value: Any) -> None:
         """Set config on AirGradient device."""

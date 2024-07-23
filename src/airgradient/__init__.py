@@ -1,7 +1,11 @@
 """Asynchronous Python client for AirGradient."""
 
 from airgradient.airgradient import AirGradientClient
-from airgradient.exceptions import AirGradientConnectionError, AirGradientError
+from airgradient.exceptions import (
+    AirGradientConnectionError,
+    AirGradientError,
+    AirGradientParseError,
+)
 from airgradient.models import (
     Config,
     ConfigurationControl,
@@ -16,6 +20,7 @@ __all__ = [
     "AirGradientClient",
     "AirGradientError",
     "AirGradientConnectionError",
+    "AirGradientParseError",
     "Measures",
     "Config",
     "PmStandard",

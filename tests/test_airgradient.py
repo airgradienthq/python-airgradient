@@ -15,6 +15,7 @@ from airgradient import (
     AirGradientClient,
     AirGradientConnectionError,
     AirGradientError,
+    AirGradientParseError,
     ConfigurationControl,
     LedBarMode,
     PmStandard,
@@ -74,7 +75,32 @@ async def test_unexpected_server_response(
         body="Yes",
     )
     with pytest.raises(AirGradientError):
-        assert await client.get_current_measures()
+        await client.get_current_measures()
+
+
+async def test_unexpected_server_json_response(
+    client: AirGradientClient,
+    responses: aioresponses,
+) -> None:
+    """Test handling unexpected response missing required fields."""
+
+    async def response_handler(_: str, **_kwargs: Any) -> CallbackResult:
+        """Response handler for this test."""
+        return CallbackResult(payload={})
+
+    responses.get(
+        f"{MOCK_URL}/measures/current",
+        callback=response_handler,
+    )
+    with pytest.raises(AirGradientParseError):
+        await client.get_current_measures()
+
+    responses.get(
+        f"{MOCK_URL}/config",
+        callback=response_handler,
+    )
+    with pytest.raises(AirGradientParseError):
+        await client.get_config()
 
 
 async def test_timeout(
@@ -94,7 +120,7 @@ async def test_timeout(
     )
     async with AirGradientClient(request_timeout=1, host=MOCK_HOST) as airgradient:
         with pytest.raises(AirGradientConnectionError):
-            assert await airgradient.get_current_measures()
+            await airgradient.get_current_measures()
 
 
 async def test_client_error(
@@ -107,12 +133,12 @@ async def test_client_error(
         """Response handler for this test."""
         raise ClientError
 
-    responses.post(
+    responses.get(
         f"{MOCK_URL}/measures/current",
         callback=response_handler,
     )
     with pytest.raises(AirGradientConnectionError):
-        assert await client.get_current_measures()
+        await client.get_current_measures()
 
 
 @pytest.mark.parametrize(
