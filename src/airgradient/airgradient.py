@@ -10,8 +10,8 @@ from typing import TYPE_CHECKING, Any
 
 from aiohttp import ClientError, ClientResponseError, ClientSession
 from aiohttp.hdrs import METH_GET, METH_PUT
-from yarl import URL
 from mashumaro import MissingField
+from yarl import URL
 
 from .exceptions import AirGradientConnectionError, AirGradientParseError
 from .models import (

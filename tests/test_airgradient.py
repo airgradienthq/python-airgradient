@@ -15,11 +15,11 @@ from airgradient import (
     AirGradientClient,
     AirGradientConnectionError,
     AirGradientError,
+    AirGradientParseError,
     ConfigurationControl,
     LedBarMode,
     PmStandard,
     TemperatureUnit,
-    AirGradientParseError,
 )
 from tests import load_fixture
 from tests.const import HEADERS, MOCK_HOST, MOCK_URL
