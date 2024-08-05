@@ -34,7 +34,7 @@ orjson = ">=3.9.0"
 [tool.poetry.group.dev.dependencies]
 codespell = "2.3.0"
 covdefaults = "2.3.0"
-coverage = {version = "7.6.0", extras = ["toml"]}
+coverage = {version = "7.6.1", extras = ["toml"]}
 mypy = "1.11.1"
 pre-commit = "3.8.0"
 pre-commit-hooks = "4.6.0"
