@@ -100,3 +100,10 @@ class Config(DataClassORJSONMixin):
     tvoc_learning_offset: int = field(
         metadata=field_options(alias="tvocLearningOffset")
     )
+
+
+@dataclass
+class VersionCheck(DataClassORJSONMixin):
+    """Version check model."""
+
+    target_version: str = field(metadata=field_options(alias="targetVersion"))

@@ -21,6 +21,7 @@ from .models import (
     Measures,
     PmStandard,
     TemperatureUnit,
+    VersionCheck,
 )
 
 if TYPE_CHECKING:
@@ -41,14 +42,12 @@ class AirGradientClient:
 
     async def _request(
         self,
-        uri: str,
+        url: URL,
         *,
         method: str = METH_GET,
         data: dict[str, Any] | None = None,
     ) -> str:
         """Handle a request to AirGradient."""
-        url = URL.build(scheme="http", host=self.host).joinpath(uri)
-
         headers = {
             "User-Agent": f"PythonAirGradient/{VERSION}",
             "Accept": "application/json",
@@ -88,9 +87,16 @@ class AirGradientClient:
 
         return await response.text()
 
+    async def _request_device(
+        self, uri: str, *, method: str = METH_GET, data: dict[str, Any] | None = None
+    ) -> str:
+        """Handle a request to the AirGradient device."""
+        url = URL.build(scheme="http", host=self.host).joinpath(uri)
+        return await self._request(url, method=method, data=data)
+
     async def get_current_measures(self) -> Measures:
         """Get current measures from AirGradient."""
-        response = await self._request("measures/current")
+        response = await self._request_device("measures/current")
         try:
             return Measures.from_json(response)
         except MissingField as err:
@@ -98,7 +104,7 @@ class AirGradientClient:
 
     async def get_config(self) -> Config:
         """Get config from AirGradient device."""
-        response = await self._request("config")
+        response = await self._request_device("config")
         try:
             return Config.from_json(response)
         except MissingField as err:
@@ -106,7 +112,7 @@ class AirGradientClient:
 
     async def _set_config(self, field: str, value: Any) -> None:
         """Set config on AirGradient device."""
-        await self._request("config", method=METH_PUT, data={field: value})
+        await self._request_device("config", method=METH_PUT, data={field: value})
 
     async def set_pm_standard(self, pm_standard: PmStandard) -> None:
         """Set PM standard on AirGradient device."""
@@ -157,6 +163,17 @@ class AirGradientClient:
     async def set_tvoc_learning_offset(self, offset: int) -> None:
         """Set TVOC learning offset on AirGradient device."""
         await self._set_config("tvocLearningOffset", offset)
+
+    async def get_latest_firmware_version(self, serial_number: str) -> str:
+        """Get the latest firmware version from AirGradient."""
+        url = URL.build(scheme="http", host="hw.airgradient.com").joinpath(
+            f"sensors/airgradient:{serial_number}/generic/os/firmware"
+        )
+        response = await self._request(url)
+        try:
+            return VersionCheck.from_json(response).target_version
+        except MissingField as err:
+            raise AirGradientParseError from err
 
     async def close(self) -> None:
         """Close open client session."""
