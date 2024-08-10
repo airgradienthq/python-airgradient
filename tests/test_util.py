@@ -13,6 +13,7 @@ from airgradient import get_model_name
         ("I-9PSL", "AirGradient ONE"),
         ("I-9PSL-DE", "AirGradient ONE"),
         ("O-1PPT", "AirGradient Open Air"),
+        ("O-1PST", "AirGradient Open Air"),
         ("DIY-PRO-4.3", "AirGradient DIY"),
         ("DIY-PRO-3.7", "AirGradient DIY"),
         ("DIY-BASIC-4.0", "AirGradient DIY"),
