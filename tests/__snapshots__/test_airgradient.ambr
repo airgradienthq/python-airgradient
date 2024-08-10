@@ -54,3 +54,6 @@
     'total_volatile_organic_component_index': None,
   })
 # ---
+# name: test_latest_version
+  '3.1.4'
+# ---

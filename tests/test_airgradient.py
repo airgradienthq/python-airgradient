@@ -247,3 +247,34 @@ async def test_setting_config(
         headers=HEADERS,
         json=expected_data,
     )
+
+
+async def test_latest_version(
+    responses: aioresponses, client: AirGradientClient, snapshot: SnapshotAssertion
+) -> None:
+    """Test getting latest firmware version."""
+    responses.get(
+        "http://hw.airgradient.com/sensors/airgradient:84fce612f5b8/generic/os/firmware",
+        status=200,
+        body=load_fixture("version.json"),
+    )
+    assert snapshot == await client.get_latest_firmware_version("84fce612f5b8")
+    responses.assert_called_with(
+        "http://hw.airgradient.com/sensors/airgradient:84fce612f5b8/generic/os/firmware",
+        headers=HEADERS,
+        json=None,
+    )
+
+
+async def test_version_parse_error(
+    responses: aioresponses,
+    client: AirGradientClient,
+) -> None:
+    """Test version parse error."""
+    responses.get(
+        "http://hw.airgradient.com/sensors/airgradient:84fce612f5b8/generic/os/firmware",
+        status=200,
+        body="{}",
+    )
+    with pytest.raises(AirGradientParseError):
+        await client.get_latest_firmware_version("84fce612f5b8")
