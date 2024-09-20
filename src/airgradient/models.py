@@ -21,6 +21,10 @@ class Measures(DataClassORJSONMixin):
     rco2: int | None = None
     pm01: int | None = None
     pm02: int | None = None
+    raw_pm02: int | None = field(default=None, metadata=field_options(alias="pm02"))
+    compensated_pm02: int | None = field(
+        default=None, metadata=field_options(alias="pm02Compensated")
+    )
     pm10: int | None = None
     total_volatile_organic_component_index: int | None = field(
         default=None, metadata=field_options(alias="tvocIndex")
@@ -40,9 +44,33 @@ class Measures(DataClassORJSONMixin):
     ambient_temperature: float | None = field(
         default=None, metadata=field_options(alias="atmp")
     )
+    raw_ambient_temperature: float | None = field(
+        default=None, metadata=field_options(alias="atmp")
+    )
+    compensated_ambient_temperature: float | None = field(
+        default=None, metadata=field_options(alias="atmpCompensated")
+    )
+    raw_relative_humidity: float | None = field(
+        default=None, metadata=field_options(alias="rhum")
+    )
     relative_humidity: float | None = field(
         default=None, metadata=field_options(alias="rhum")
     )
+    compensated_relative_humidity: float | None = field(
+        default=None, metadata=field_options(alias="rhumCompensated")
+    )
+
+    @classmethod
+    def __post_deserialize__(cls, obj: Measures) -> Measures:
+        """Post deserialize hook."""
+        obj.ambient_temperature = (
+            obj.compensated_ambient_temperature or obj.ambient_temperature
+        )
+        obj.relative_humidity = (
+            obj.compensated_relative_humidity or obj.relative_humidity
+        )
+        obj.pm02 = obj.compensated_pm02 or obj.pm02
+        return obj
 
 
 class PmStandard(StrEnum):
