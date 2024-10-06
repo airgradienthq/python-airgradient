@@ -21,6 +21,25 @@ This package allows you to fetch data from AirGradient.
 pip install airgradient
 ```
 
+## Usage
+
+```python
+import asyncio
+
+from airgradient import AirGradientClient
+
+
+async def main() -> None:
+    """Show example of fetching measurement."""
+    async with AirGradientClient("10.0.0.123") as client:
+        measurements = await client.get_current_measures()
+        print(measurements)
+
+
+if __name__ == "__main__":
+    asyncio.run(main())
+```
+
 ## Changelog & Releases
 
 This repository keeps a change log using [GitHub's releases][releases]
