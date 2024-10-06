@@ -63,11 +63,11 @@ class Measures(DataClassORJSONMixin):
     @classmethod
     def __post_deserialize__(cls, obj: Measures) -> Measures:
         """Post deserialize hook."""
-        if obj.compensated_ambient_temperature is None:
+        if obj.compensated_ambient_temperature is not None:
             obj.ambient_temperature = obj.compensated_ambient_temperature
-        if obj.compensated_relative_humidity is None:
+        if obj.compensated_relative_humidity is not None:
             obj.relative_humidity = obj.compensated_relative_humidity
-        if obj.compensated_pm02 is None:
+        if obj.compensated_pm02 is not None:
             obj.pm02 = obj.compensated_pm02
         return obj
 
