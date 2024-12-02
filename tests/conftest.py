@@ -1,6 +1,6 @@
 """Asynchronous Python client for AirGradient."""
 
-from typing import AsyncGenerator, Generator
+from collections.abc import AsyncGenerator, Generator
 
 import aiohttp
 from aioresponses import aioresponses
@@ -21,10 +21,13 @@ def snapshot_assertion(snapshot: SnapshotAssertion) -> SnapshotAssertion:
 @pytest.fixture
 async def client() -> AsyncGenerator[AirGradientClient, None]:
     """Return a AirGradient client."""
-    async with aiohttp.ClientSession() as session, AirGradientClient(
-        "192.168.0.30",
-        session=session,
-    ) as airgradient_client:
+    async with (
+        aiohttp.ClientSession() as session,
+        AirGradientClient(
+            "192.168.0.30",
+            session=session,
+        ) as airgradient_client,
+    ):
         yield airgradient_client
 
 
