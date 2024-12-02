@@ -18,14 +18,14 @@ from airgradient.util import get_model_name
 
 __all__ = [
     "AirGradientClient",
-    "AirGradientError",
     "AirGradientConnectionError",
+    "AirGradientError",
     "AirGradientParseError",
-    "Measures",
     "Config",
-    "PmStandard",
-    "TemperatureUnit",
     "ConfigurationControl",
     "LedBarMode",
+    "Measures",
+    "PmStandard",
+    "TemperatureUnit",
     "get_model_name",
 ]
