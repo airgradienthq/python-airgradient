@@ -20,16 +20,16 @@ class Measures(DataClassORJSONMixin):
     model: str = field(metadata=field_options(alias="model"))
     rco2: int | None = None
     pm01: int | None = None
-    pm02: int | None = None
+    pm02: float | None = None
     raw_pm02: int | None = field(default=None, metadata=field_options(alias="pm02"))
-    compensated_pm02: int | None = field(
+    compensated_pm02: float | None = field(
         default=None, metadata=field_options(alias="pm02Compensated")
     )
     pm10: int | None = None
     total_volatile_organic_component_index: int | None = field(
         default=None, metadata=field_options(alias="tvocIndex")
     )
-    raw_total_volatile_organic_component: int | None = field(
+    raw_total_volatile_organic_component: float | None = field(
         default=None, metadata=field_options(alias="tvocRaw")
     )
     pm003_count: int | None = field(
@@ -38,7 +38,7 @@ class Measures(DataClassORJSONMixin):
     nitrogen_index: int | None = field(
         default=None, metadata=field_options(alias="noxIndex")
     )
-    raw_nitrogen: int | None = field(
+    raw_nitrogen: float | None = field(
         default=None, metadata=field_options(alias="noxRaw")
     )
     ambient_temperature: float | None = field(
