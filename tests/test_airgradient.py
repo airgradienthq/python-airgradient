@@ -145,7 +145,12 @@ async def test_client_error(
 
 @pytest.mark.parametrize(
     "fixture",
-    ["current_measures.json", "measures_after_boot.json", "current_measures_zero.json"],
+    [
+        "current_measures.json",
+        "current_measures_2.json",
+        "measures_after_boot.json",
+        "current_measures_zero.json",
+    ],
 )
 async def test_current_fixtures(
     responses: aioresponses,
