@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import asyncio
-from typing import TYPE_CHECKING, Any, Callable
+from typing import TYPE_CHECKING, Any
 
 import aiohttp
 from aiohttp import ClientError
@@ -25,7 +25,7 @@ from tests import load_fixture
 from tests.const import HEADERS, MOCK_HOST, MOCK_URL
 
 if TYPE_CHECKING:
-    from collections.abc import Awaitable
+    from collections.abc import Awaitable, Callable
 
     from syrupy import SnapshotAssertion
 
